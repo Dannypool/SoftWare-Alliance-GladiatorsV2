@@ -8,7 +8,7 @@ $(function () {
   Backbone.app = new Router();
 });
 
-},{"./routers/router":2,"backbone":3,"jquery":5}],2:[function(require,module,exports){
+},{"./routers/router":2,"backbone":5,"jquery":7}],2:[function(require,module,exports){
 var Backbone      = require('backbone'),
     // Albums        = require('../collections/albums'),
     // Songs         = require('../collections/songs'),
@@ -17,15 +17,18 @@ var Backbone      = require('backbone'),
     // PlaylistView  = require('../views/list'),
     // PlayerView    = require('../views/player'),
     // AlbumsView    = require('../views/albums'),
+    CursosPanelView    = require('../views/cursoPanelView'),
     $             = require('jquery');
 
 module.exports = Backbone.Router.extend({
   routes: {
     "": "index",
+    "cursos": "showCursos",
     "album/:name": "album"
   },
 
   initialize: function () {
+
     // this.current = {};
     // this.jsonData = {};
     // this.albums = new Albums();
@@ -41,10 +44,42 @@ module.exports = Backbone.Router.extend({
     // this.fetchData();
     console.log('index')
   },
+  showCursos: function () {
+  	var panelCursosView = new CursosPanelView();
+  	panelCursosView.render();
+  }
 
   
 });
-},{"backbone":3,"jquery":5}],3:[function(require,module,exports){
+},{"../views/cursoPanelView":4,"backbone":5,"jquery":7}],3:[function(require,module,exports){
+var _ = require('underscore');
+	
+module.exports = _.template(' \
+	<div class="col-md-3"> \
+	    <div class="panel panel-default"> \
+	      <div class="panel-heading">Panel heading without title</div> \
+	      <div class="panel-body"> \
+	        Panel content \
+	      </div> \
+	    </div> \
+	</div> \
+	');
+},{"underscore":8}],4:[function(require,module,exports){
+var Backbone = require('backbone'),
+	template = require('../templates/panelTemplate')
+	$ = require('jquery');
+module.exports = Backbone.View.extend({
+	className: 'col-md-3',
+	el: $('.main'),
+	initialize: function () {
+		console.log('cursoPanelView');
+	},
+	render: function () {
+		var html = template();
+		this.$el.html(html)
+	}
+});
+},{"../templates/panelTemplate":3,"backbone":5,"jquery":7}],5:[function(require,module,exports){
 //     Backbone.js 1.1.2
 
 //     (c) 2010-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -1654,7 +1689,7 @@ module.exports = Backbone.Router.extend({
 
 }));
 
-},{"underscore":4}],4:[function(require,module,exports){
+},{"underscore":6}],6:[function(require,module,exports){
 //     Underscore.js 1.7.0
 //     http://underscorejs.org
 //     (c) 2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -3071,7 +3106,7 @@ module.exports = Backbone.Router.extend({
   }
 }.call(this));
 
-},{}],5:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.1.1
  * http://jquery.com/
@@ -12263,4 +12298,6 @@ return jQuery;
 
 }));
 
-},{}]},{},[1]);
+},{}],8:[function(require,module,exports){
+module.exports=require(6)
+},{"c:\\Users\\Daniel\\Documents\\GitHub\\SoftWare-Alliance-GladiatorsV2\\node_modules\\backbone\\node_modules\\underscore\\underscore.js":6}]},{},[1]);

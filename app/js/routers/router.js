@@ -6,15 +6,18 @@ var Backbone      = require('backbone'),
     // PlaylistView  = require('../views/list'),
     // PlayerView    = require('../views/player'),
     // AlbumsView    = require('../views/albums'),
+    CursosPanelView    = require('../views/cursoPanelView'),
     $             = require('jquery');
 
 module.exports = Backbone.Router.extend({
   routes: {
     "": "index",
+    "cursos": "showCursos",
     "album/:name": "album"
   },
 
   initialize: function () {
+
     // this.current = {};
     // this.jsonData = {};
     // this.albums = new Albums();
@@ -30,6 +33,10 @@ module.exports = Backbone.Router.extend({
     // this.fetchData();
     console.log('index')
   },
+  showCursos: function () {
+  	var panelCursosView = new CursosPanelView();
+  	panelCursosView.render();
+  }
 
   
 });
