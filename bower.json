@@ -1,0 +1,26 @@
+{
+  "name": "SoftWare-Alliance-GladiatorsV2",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Dannypool/SoftWare-Alliance-GladiatorsV2",
+  "authors": [
+    "Dannypool <a.kluya@gmail.com>"
+  ],
+  "description": "tributo",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "tributo"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "backbone": "~1.1.2"
+  }
+}
