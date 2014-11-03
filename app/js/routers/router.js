@@ -6,6 +6,7 @@ var Backbone      = require('backbone'),
     // PlaylistView  = require('../views/list'),
     // PlayerView    = require('../views/player'),
     // AlbumsView    = require('../views/albums'),
+    Cursos         = require('../collections/cursos'),
     CursosPanelView    = require('../views/cursoPanelView'),
     $             = require('jquery');
 
@@ -26,6 +27,9 @@ module.exports = Backbone.Router.extend({
     // this.player = new PlayerView({ model: new Song() });
     // this.albumlist = new AlbumsView({ collection: this.albums });
 
+    this.cursos = new Cursos();
+
+    this.panelCursosView = new CursosPanelView({ collection: this.cursos });
     Backbone.history.start();
   },
 
@@ -34,8 +38,28 @@ module.exports = Backbone.Router.extend({
     console.log('index')
   },
   showCursos: function () {
-  	var panelCursosView = new CursosPanelView();
-  	panelCursosView.render();
+    console.log('hola')
+    this.getCursos();
+  	this.panelCursosView.render();
+  },
+  getCursos: function () {
+    var data = [{
+      id: 1,
+      fechaInicio: '12/12/12',
+      fechaTermina: '12/12/13',
+      nombre: 'curso 1',
+      descripcion: 'descripcion 1',
+      status: 'inscripcion'
+    },
+    {
+      id: 2,
+      fechaInicio: '12/12/12',
+      fechaTermina: '12/12/13',
+      nombre: 'curso 2',
+      descripcion: 'descripcion 2',
+      status: 'inscripcion'
+    }];
+    this.cursos.reset(data);
   }
 
   

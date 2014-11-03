@@ -1,4 +1,11 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+var Backbone = require('backbone'),
+    curso     = require('../models/curso');
+
+module.exports = Backbone.Collection.extend({
+  model: curso
+});
+},{"../models/curso":3,"backbone":9}],2:[function(require,module,exports){
 var Backbone    = require('backbone'),
     Router      = require('./routers/router'),
     $           = require('jquery')
@@ -8,7 +15,20 @@ $(function () {
   Backbone.app = new Router();
 });
 
-},{"./routers/router":2,"backbone":5,"jquery":7}],2:[function(require,module,exports){
+},{"./routers/router":4,"backbone":9,"jquery":11}],3:[function(require,module,exports){
+var Backbone = require('backbone');
+module.exports = Backbone.Model.extend({
+	idAttribute: 'id',
+	defaults: {
+		id: null,
+		fechaInicio: null,
+		fechaTermina: null,
+		nombre: null,
+		descripcion: null,
+		status: null
+	}
+});
+},{"backbone":9}],4:[function(require,module,exports){
 var Backbone      = require('backbone'),
     // Albums        = require('../collections/albums'),
     // Songs         = require('../collections/songs'),
@@ -17,6 +37,7 @@ var Backbone      = require('backbone'),
     // PlaylistView  = require('../views/list'),
     // PlayerView    = require('../views/player'),
     // AlbumsView    = require('../views/albums'),
+    Cursos         = require('../collections/cursos'),
     CursosPanelView    = require('../views/cursoPanelView'),
     $             = require('jquery');
 
@@ -37,6 +58,9 @@ module.exports = Backbone.Router.extend({
     // this.player = new PlayerView({ model: new Song() });
     // this.albumlist = new AlbumsView({ collection: this.albums });
 
+    this.cursos = new Cursos();
+
+    this.panelCursosView = new CursosPanelView({ collection: this.cursos });
     Backbone.history.start();
   },
 
@@ -45,41 +69,108 @@ module.exports = Backbone.Router.extend({
     console.log('index')
   },
   showCursos: function () {
-  	var panelCursosView = new CursosPanelView();
-  	panelCursosView.render();
+    console.log('hola')
+    this.getCursos();
+  	this.panelCursosView.render();
+  },
+  getCursos: function () {
+    var data = [{
+      id: 1,
+      fechaInicio: '12/12/12',
+      fechaTermina: '12/12/13',
+      nombre: 'curso 1',
+      descripcion: 'descripcion 1',
+      status: 'inscripcion'
+    },
+    {
+      id: 2,
+      fechaInicio: '12/12/12',
+      fechaTermina: '12/12/13',
+      nombre: 'curso 2',
+      descripcion: 'descripcion 2',
+      status: 'inscripcion'
+    }];
+    this.cursos.reset(data);
   }
 
   
 });
-},{"../views/cursoPanelView":4,"backbone":5,"jquery":7}],3:[function(require,module,exports){
+},{"../collections/cursos":1,"../views/cursoPanelView":7,"backbone":9,"jquery":11}],5:[function(require,module,exports){
+var _ = require('underscore');
+	
+module.exports = _.template(' \
+	<p class="li-p"><%= nombre %></p> \
+	<small><%= descripcion %></small> \
+	<div class="ocultar pos-abajo pos-derecha"> \
+		<button class="btn btn-danger btn-xs btn-cancelar" id="btn_eliminar_usr"> \
+		<span class="glyphicon glyphicon-trash"> </span> \
+		</button> \
+		<button class="ladda-button btn btn-xs btn-cancelar" id="btn_modificar_usr" data-style="zoom-in" data-size="xs"> \
+		<span class="glyphicon glyphicon-edit"> </span> \
+		</button> \
+	</div> \
+	');
+},{"underscore":12}],6:[function(require,module,exports){
 var _ = require('underscore');
 	
 module.exports = _.template(' \
 	<div class="col-md-3"> \
 	    <div class="panel panel-default"> \
-	      <div class="panel-heading">Panel heading without title</div> \
-	      <div class="panel-body"> \
-	        Panel content \
-	      </div> \
+	      	<div class="panel-heading">Panel heading without title</div> \
+	      	<div class="panel-body panel-height sin-padding"> \
+	        	<ul class="ul-lista"> \
+	        	</ul> \
+	      	</div> \
 	    </div> \
 	</div> \
 	');
-},{"underscore":8}],4:[function(require,module,exports){
+},{"underscore":12}],7:[function(require,module,exports){
 var Backbone = require('backbone'),
-	template = require('../templates/panelTemplate')
+	template = require('../templates/panelTemplate'),
+	CursoView = require('../views/cursoView'),
 	$ = require('jquery');
 module.exports = Backbone.View.extend({
-	className: 'col-md-3',
 	el: $('.main'),
 	initialize: function () {
-		console.log('cursoPanelView');
+		this.listenTo(this.collection, "add", this.addOne, this);
+	    // this.listenTo(this.collection, "reset", this.render, this);
 	},
 	render: function () {
 		var html = template();
 		this.$el.html(html)
+		this.$lista = this.$('.ul-lista');
+		this.addAll();
+	},
+	addOne: function (curso) {
+	    var cursoView = new CursoView({ model: curso });
+	    this.$lista.append(cursoView.render().el);
+	},
+	addAll: function () {
+		console.log(this.collection)
+		this.$lista.empty();
+		this.collection.forEach(this.addOne, this);
 	}
 });
-},{"../templates/panelTemplate":3,"backbone":5,"jquery":7}],5:[function(require,module,exports){
+},{"../templates/panelTemplate":6,"../views/cursoView":8,"backbone":9,"jquery":11}],8:[function(require,module,exports){
+var Backbone = require('backbone'),
+	template = require('../templates/cursoList'),
+	$ = require('jquery');
+module.exports = Backbone.View.extend({
+	className: 'li-lista',
+	tagName: 'li',
+	initialize: function () {
+	    this.listenTo(this.model, "change", this.render, this);
+	},
+	render: function () {
+		var curso = this.model.toJSON()
+		console.log(curso)
+		var html = template(curso);
+		console.log(html)
+		this.$el.html(html);
+		return this;
+	}
+});
+},{"../templates/cursoList":5,"backbone":9,"jquery":11}],9:[function(require,module,exports){
 //     Backbone.js 1.1.2
 
 //     (c) 2010-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -1689,7 +1780,7 @@ module.exports = Backbone.View.extend({
 
 }));
 
-},{"underscore":6}],6:[function(require,module,exports){
+},{"underscore":10}],10:[function(require,module,exports){
 //     Underscore.js 1.7.0
 //     http://underscorejs.org
 //     (c) 2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -3106,7 +3197,7 @@ module.exports = Backbone.View.extend({
   }
 }.call(this));
 
-},{}],7:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.1.1
  * http://jquery.com/
@@ -12298,6 +12389,6 @@ return jQuery;
 
 }));
 
-},{}],8:[function(require,module,exports){
-module.exports=require(6)
-},{"c:\\Users\\Daniel\\Documents\\GitHub\\SoftWare-Alliance-GladiatorsV2\\node_modules\\backbone\\node_modules\\underscore\\underscore.js":6}]},{},[1]);
+},{}],12:[function(require,module,exports){
+module.exports=require(10)
+},{"c:\\Users\\Daniel\\Documents\\GitHub\\SoftWare-Alliance-GladiatorsV2\\node_modules\\backbone\\node_modules\\underscore\\underscore.js":10}]},{},[2]);

@@ -1,0 +1,77 @@
+@import "../css/bootstrap.min.css"
+@import "../css/bootstrap-theme.min.css"
+
+.ul-lista
+    padding-left 0px
+    margin-bottom 0px
+    max-height 590px
+    overflow auto
+    overflow-x hidden
+    
+    .li-lista
+            
+        list-item()
+
+        padding 10px
+        padding-top .5em
+        position relative
+        margin-right .2em
+        
+
+        &:last-child
+            content ""
+
+        &:first-child
+            content ""
+            margin-top .5em
+
+        .ocultar
+            position absolute
+            display none
+            padding 10px
+
+        &:hover
+            background-color #eee
+            .ocultar
+                display block
+
+        .li-p
+            margin 0
+            
+.pos-abajo
+    position absolute
+    bottom 0
+
+.pos-derecha
+    position absolute
+    right 0
+
+.margen-derecho
+    margin-right .5em
+
+.ocultar
+    display none
+    
+.panel-height
+    height 641px
+    height-max 600px
+    
+.sin-padding
+    padding 0
+    
+body
+    padding-top: 70px;
+    padding-bottom: 30px;
+
+
+.theme-dropdown .dropdown-menu
+    position: static;
+    display: block;
+    margin-bottom: 20px;
+
+
+.theme-showcase > p > .btn 
+    margin: 5px 0;
+
+.theme-showcase .navbar .container
+    width: auto;
