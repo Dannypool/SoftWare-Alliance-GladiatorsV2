@@ -19,7 +19,6 @@ module.exports = Backbone.View.extend({
 	    this.$lista.append(cursoView.render().el);
 	},
 	addAll: function () {
-		console.log(this.collection)
 		this.$lista.empty();
 		this.collection.forEach(this.addOne, this);
 	}

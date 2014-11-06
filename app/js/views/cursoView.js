@@ -9,9 +9,7 @@ module.exports = Backbone.View.extend({
 	},
 	render: function () {
 		var curso = this.model.toJSON()
-		console.log(curso)
 		var html = template(curso);
-		console.log(html)
 		this.$el.html(html);
 		return this;
 	}

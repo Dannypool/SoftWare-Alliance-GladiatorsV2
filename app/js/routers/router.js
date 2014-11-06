@@ -8,12 +8,14 @@ var Backbone      = require('backbone'),
     // AlbumsView    = require('../views/albums'),
     Cursos         = require('../collections/cursos'),
     CursosPanelView    = require('../views/cursoPanelView'),
+    AspiranteGeneral    = require('../views/aspirantes/datosGeneralesView'),
     $             = require('jquery');
 
 module.exports = Backbone.Router.extend({
   routes: {
     "": "index",
     "cursos": "showCursos",
+    "aspirantes/nuevo": "nuevoAspirante",
     "album/:name": "album"
   },
 
@@ -26,16 +28,23 @@ module.exports = Backbone.Router.extend({
     // this.playlist = new PlaylistView({ collection: this.songs });
     // this.player = new PlayerView({ model: new Song() });
     // this.albumlist = new AlbumsView({ collection: this.albums });
-
+    this.$contenedor = $(".main")
     this.cursos = new Cursos();
 
     this.panelCursosView = new CursosPanelView({ collection: this.cursos });
+
+    this.aspiranteGeneral = new AspiranteGeneral();
+
     Backbone.history.start();
   },
 
   index: function () {
     // this.fetchData();
     console.log('index')
+  },
+  nuevoAspirante: function () {
+    this.$contenedor.empty();
+    this.aspiranteGeneral.render();
   },
   showCursos: function () {
     console.log('hola')

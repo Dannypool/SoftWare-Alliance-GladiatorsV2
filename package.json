@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "bundle": "browserify app/js/main.js -o app/js/app.js"
+    "bundle": "browserify -t hbsfy app/js/main.js -o app/js/app.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
   "dependencies": {
     "backbone": "^1.1.2",
     "browserify": "^6.2.0",
+    "handlebars": "^2.0.0",
     "jquery": "^2.1.1",
     "node-static": "^0.7.6",
     "underscore": "^1.7.0"

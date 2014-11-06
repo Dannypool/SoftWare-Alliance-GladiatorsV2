@@ -80,6 +80,59 @@
                       </div>
                     </div>
                 </div>
+                <div class="col-md-9">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">Panel heading without title</div>
+                      <div class="panel-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Nombre</label>
+                                        <input type="text" class="form-control input-sm" id="txtNombre">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label class="control-label">Fecha de inicio</label>
+                                    <div class="input-group date customdatepicker"> 
+                                        <input type="text" required="" class="form-control input-sm" id="fechaNac" placeholder="DD/MM/YYYY">  
+                                        <span class="input-group-addon input-sm"> 
+                                            <span class="glyphicon glyphicon-calendar"></span> 
+                                        </span>
+                                    </div> 
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="control-label">Fecha de termino</label>
+                                    <div class="input-group date customdatepicker"> 
+                                        <input type="text" required="" class="form-control input-sm" id="fechaNac" placeholder="DD/MM/YYYY">  
+                                        <span class="input-group-addon input-sm"> 
+                                            <span class="glyphicon glyphicon-calendar"></span> 
+                                        </span>
+                                    </div> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Descripcion</label>
+                                        <textarea class="form-control" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="pull-right margen-derecho">
+                                <button type="button" class="btn btn-default btn-sm" id="btn_cancelar_edit">Cancelar</button>
+                                <button type="button" class="btn btn-success btn-sm" id="btn_save_usuario">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
             </div>
         </div>
         <!--[if lt IE 7]>
